@@ -40,7 +40,7 @@ namespace Kons
         }
     }
 
-    sealed partial class ConsList<T> : IEnumerable<T>, IEquatable<ConsList<T>>
+    sealed partial class ConsList<T> : ICollection<T>, IEquatable<ConsList<T>>
     {
         public static readonly ConsList<T> Empty = new ConsList<T>();
 
@@ -54,6 +54,7 @@ namespace Kons
             if (tail == null) throw new ArgumentNullException("tail");
             _item = item;
             _next = tail;
+            Count = _next.Count + 1;
         }
 
         public ConsList<T> Cons(T item)
@@ -100,9 +101,29 @@ namespace Kons
             for (var current = this; !current.IsEmpty; current = current._next)
                 yield return current._item;
         }
+
+        bool ICollection<T>.Contains(T item)
+        {
+            return this.Any(e => EqualityComparer<T>.Default.Equals(e, item));
+        }
+
+        public void CopyTo(T[] array, int arrayIndex)
+        {
+            foreach (var item in this)
+                array[arrayIndex++] = item;
+        }
+
+        public int Count { get; private set; }
+        bool ICollection<T>.IsReadOnly { get { return true; } }
+
+        void ICollection<T>.Add(T item) { throw ReadOnlyError(); }
+        void ICollection<T>.Clear() { throw ReadOnlyError(); }
+        bool ICollection<T>.Remove(T item) { throw ReadOnlyError(); }
+
+        static NotSupportedException ReadOnlyError() { return new NotSupportedException("Cannot modify a read-only list."); }
     }
 
-    #if KONS_PUBLIC
+#if KONS_PUBLIC
 
     public partial class ConsList { }
     public partial class ConsList<T> { }
