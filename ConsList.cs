@@ -63,15 +63,22 @@ namespace Kons
         public ConsList<T> Cons(IEnumerable<T> items) =>
             items.Aggregate(this, (current, item) => current.Cons(item));
 
-        public Tuple<T, ConsList<T>> Cadr() => Cadr(Tuple.Create);
+        public bool IsEmpty => _next == null;
 
-        public TResult Cadr<TResult>(Func<T, ConsList<T>, TResult> selector)
+        ConsList<T> NonEmpty
         {
-            if (IsEmpty) throw new InvalidOperationException();
-            return selector(_item, _next);
+            get
+            {
+                if (IsEmpty) throw new InvalidOperationException();
+                return this;
+            }
         }
 
-        public bool IsEmpty => _next == null;
+        public Tuple<T, ConsList<T>> Cadr() => Cadr(Tuple.Create);
+        public TResult Cadr<TResult>(Func<T, ConsList<T>, TResult> selector) => selector(Car, Cdr);
+
+        public T Car => NonEmpty._item;
+        public ConsList<T> Cdr => NonEmpty._next;
 
         public override bool Equals(object obj) => Equals(obj as ConsList<T>);
 
