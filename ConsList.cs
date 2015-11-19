@@ -23,13 +23,13 @@ namespace Kons
 
     static partial class ConsList
     {
-        public static ConsList<T> Return<T>(T item) { return ConsList<T>.Empty.Cons(item); }
+        public static ConsList<T> Return<T>(T item) => ConsList<T>.Empty.Cons(item);
 
-        public static ConsList<T> Cons<T>(T item1, T item2) { return Return(item2).Cons(item1); }
-        public static ConsList<T> Cons<T>(T item1, T item2, T item3) { return Return(item3).Cons(item2).Cons(item1); }
-        public static ConsList<T> Cons<T>(T item1, T item2, T item3, T item4) { return Return(item4).Cons(item3).Cons(item2).Cons(item1); }
-        public static ConsList<T> Cons<T>(ConsList<T> source) { return Cons(source.AsEnumerable()); }
-        public static ConsList<T> Cons<T>(IEnumerable<T> source) { return source.Aggregate(ConsList<T>.Empty, (list, e) => list.Cons(e)); }
+        public static ConsList<T> Cons<T>(T item1, T item2)                   => Return(item2).Cons(item1);
+        public static ConsList<T> Cons<T>(T item1, T item2, T item3)          => Return(item3).Cons(item2).Cons(item1);
+        public static ConsList<T> Cons<T>(T item1, T item2, T item3, T item4) => Return(item4).Cons(item3).Cons(item2).Cons(item1);
+        public static ConsList<T> Cons<T>(ConsList<T> source)                 => Cons(source.AsEnumerable());
+        public static ConsList<T> Cons<T>(IEnumerable<T> source)              => source.Aggregate(ConsList<T>.Empty, (list, e) => list.Cons(e));
 
         public static ConsList<T> List<T>(params T[] items)
         {
@@ -57,20 +57,13 @@ namespace Kons
             Count = _next.Count + 1;
         }
 
-        public ConsList<T> Cons(T item)
-        {
-            return new ConsList<T>(item, this);
-        }
+        public ConsList<T> Cons(T item) =>
+            new ConsList<T>(item, this);
 
-        public ConsList<T> Cons(IEnumerable<T> items)
-        {
-            return items.Aggregate(this, (current, item) => current.Cons(item));
-        }
+        public ConsList<T> Cons(IEnumerable<T> items) =>
+            items.Aggregate(this, (current, item) => current.Cons(item));
 
-        public Tuple<T, ConsList<T>> Cadr()
-        {
-            return Cadr(Tuple.Create);
-        }
+        public Tuple<T, ConsList<T>> Cadr() => Cadr(Tuple.Create);
 
         public TResult Cadr<TResult>(Func<T, ConsList<T>, TResult> selector)
         {
@@ -78,23 +71,19 @@ namespace Kons
             return selector(_item, _next);
         }
 
-        public bool IsEmpty { get { return _next == null; } }
+        public bool IsEmpty => _next == null;
 
-        public override bool Equals(object obj) { return Equals(obj as ConsList<T>); }
+        public override bool Equals(object obj) => Equals(obj as ConsList<T>);
 
-        public bool Equals(ConsList<T> other)
-        {
-            return other != null
-                && EqualityComparer<T>.Default.Equals(_item, other._item)
-                && Equals(_next, other._next);
-        }
+        public bool Equals(ConsList<T> other) =>
+            other != null
+            && EqualityComparer<T>.Default.Equals(_item, other._item)
+            && Equals(_next, other._next);
 
-        public override int GetHashCode()
-        {
-            return unchecked ((EqualityComparer<T>.Default.GetHashCode(_item) * 397) ^ (_next != null ? _next.GetHashCode() : 0));
-        }
+        public override int GetHashCode() =>
+            unchecked ((EqualityComparer<T>.Default.GetHashCode(_item) * 397) ^ (_next?.GetHashCode() ?? 0));
 
-        IEnumerator IEnumerable.GetEnumerator() { return GetEnumerator(); }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         public IEnumerator<T> GetEnumerator()
         {
@@ -102,10 +91,8 @@ namespace Kons
                 yield return current._item;
         }
 
-        bool ICollection<T>.Contains(T item)
-        {
-            return this.Any(e => EqualityComparer<T>.Default.Equals(e, item));
-        }
+        bool ICollection<T>.Contains(T item) =>
+            this.Any(e => EqualityComparer<T>.Default.Equals(e, item));
 
         public void CopyTo(T[] array, int arrayIndex)
         {
@@ -114,13 +101,13 @@ namespace Kons
         }
 
         public int Count { get; private set; }
-        bool ICollection<T>.IsReadOnly { get { return true; } }
+        bool ICollection<T>.IsReadOnly => true;
 
         void ICollection<T>.Add(T item) { throw ReadOnlyError(); }
         void ICollection<T>.Clear() { throw ReadOnlyError(); }
         bool ICollection<T>.Remove(T item) { throw ReadOnlyError(); }
 
-        static NotSupportedException ReadOnlyError() { return new NotSupportedException("Cannot modify a read-only list."); }
+        static NotSupportedException ReadOnlyError() => new NotSupportedException("Cannot modify a read-only list.");
     }
 
 #if KONS_PUBLIC
