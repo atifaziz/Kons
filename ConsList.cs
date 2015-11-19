@@ -107,6 +107,9 @@ namespace Kons
 
         public void CopyTo(T[] array, int arrayIndex)
         {
+            if (array == null) throw new ArgumentNullException(nameof(array));
+            if (arrayIndex + Count > array.Length) throw new ArgumentException("Destination array not long enough.");
+
             foreach (var item in this)
                 array[arrayIndex++] = item;
         }
