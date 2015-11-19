@@ -61,13 +61,14 @@ namespace Kons
             Count = _next.Count + 1;
         }
 
+        public int Count { get; }
+        public bool IsEmpty => _next == null;
+
         public ConsList<T> Cons(T item) =>
             new ConsList<T>(item, this);
 
         public ConsList<T> Cons(IEnumerable<T> items) =>
             items.Aggregate(this, (current, item) => current.Cons(item));
-
-        public bool IsEmpty => _next == null;
 
         ConsList<T> NonEmpty
         {
@@ -125,7 +126,6 @@ namespace Kons
             return array;
         }
 
-        public int Count { get; }
         bool ICollection<T>.IsReadOnly => true;
 
         void ICollection<T>.Add(T item) { throw ReadOnlyError(); }
