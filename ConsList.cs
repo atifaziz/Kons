@@ -100,7 +100,7 @@ namespace Kons
                 array[arrayIndex++] = item;
         }
 
-        public int Count { get; private set; }
+        public int Count { get; }
         bool ICollection<T>.IsReadOnly => true;
 
         void ICollection<T>.Add(T item) { throw ReadOnlyError(); }
@@ -110,7 +110,7 @@ namespace Kons
         static NotSupportedException ReadOnlyError() => new NotSupportedException("Cannot modify a read-only list.");
     }
 
-#if KONS_PUBLIC
+    #if KONS_PUBLIC
 
     public partial class ConsList { }
     public partial class ConsList<T> { }
