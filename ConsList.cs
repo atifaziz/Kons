@@ -31,7 +31,6 @@ namespace Kons
         public static ConsList<T> Cons<T>(T item1, T item2)                   => Return(item2).Cons(item1);
         public static ConsList<T> Cons<T>(T item1, T item2, T item3)          => Return(item3).Cons(item2).Cons(item1);
         public static ConsList<T> Cons<T>(T item1, T item2, T item3, T item4) => Return(item4).Cons(item3).Cons(item2).Cons(item1);
-        public static ConsList<T> Cons<T>(ConsList<T> source)                 => Cons(source.AsEnumerable());
 
         public static ConsList<T> Cons<T>(IList<T> list)
         {
