@@ -21,6 +21,8 @@ namespace Kons
     using System.Collections.Generic;
     using System.Linq;
 
+    // ReSharper disable PartialTypeWithSinglePart
+
     static partial class ConsList
     {
         public static ConsList<T> Return<T>(T item) => ConsList<T>.Empty.Cons(item);
