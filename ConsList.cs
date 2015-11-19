@@ -1,4 +1,4 @@
-﻿#region Copyright (c) 2013 Atif Aziz. All rights reserved.
+#region Copyright (c) 2013 Atif Aziz. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ namespace Kons
     using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
     // ReSharper disable PartialTypeWithSinglePart
@@ -86,16 +87,16 @@ namespace Kons
         public ConsList<T> Cons(IEnumerable<T> items) =>
             items.Aggregate(this, (current, item) => current.Cons(item));
 
-        ConsList<T> NonEmpty
+        ConsList<T> NonEmpty => Of(1, null, "List is empty.");
+
+        [SuppressMessage("ReSharper", "UnusedParameter.Local")]
+        ConsList<T> Of(int min, int? max, string message = null)
         {
-            get
-            {
-                if (IsEmpty) throw new InvalidOperationException();
-                return this;
-            }
+            if (Count < min || Count > max) throw new InvalidOperationException(message);
+            return this;
         }
 
-        public Tuple<T, ConsList<T>> Cadr() => Cadr(Tuple.Create);
+        public Tuple<T, ConsList<T>> Cadr() => Cadr((a, ar) => Tuple.Create(a, ar));
         public TResult Cadr<TResult>(Func<T, ConsList<T>, TResult> selector) => selector(Car, Cdr);
 
         public T Car => NonEmpty._item;

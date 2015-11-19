@@ -41,6 +41,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AssemblyInfo.g.tt</DependentUpon>
     </Compile>
+    <Compile Include="ConsList.Cadr.g.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ConsList.Cadr.g.tt</DependentUpon>
+    </Compile>
     <Compile Include="ConsList.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -50,6 +55,11 @@
     <Content Include="AssemblyInfo.g.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AssemblyInfo.g.cs</LastGenOutput>
+    </Content>
+    <Content Include="ConsList.Cadr.g.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ConsList.Cadr.g.cs</LastGenOutput>
+      <DependentUpon>ConsList.cs</DependentUpon>
     </Content>
   </ItemGroup>
   <ItemGroup>
