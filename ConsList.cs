@@ -111,6 +111,17 @@ namespace Kons
                 array[arrayIndex++] = item;
         }
 
+        static readonly T[] EmptyArray = new T[0];
+
+        public T[] ToArray()
+        {
+            if (IsEmpty)
+                return EmptyArray;
+            var array = new T[Count];
+            CopyTo(array, 0);
+            return array;
+        }
+
         public int Count { get; }
         bool ICollection<T>.IsReadOnly => true;
 
