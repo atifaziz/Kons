@@ -32,9 +32,26 @@ namespace Kons
         public static ConsList<T> Cons<T>(T item1, T item2, T item3)          => Return(item3).Cons(item2).Cons(item1);
         public static ConsList<T> Cons<T>(T item1, T item2, T item3, T item4) => Return(item4).Cons(item3).Cons(item2).Cons(item1);
         public static ConsList<T> Cons<T>(ConsList<T> source)                 => Cons(source.AsEnumerable());
-        public static ConsList<T> Cons<T>(IEnumerable<T> source)              => source.Aggregate(ConsList<T>.Empty, (list, e) => list.Cons(e));
 
-        public static ConsList<T> List<T>(params T[] items)
+        public static ConsList<T> Cons<T>(IList<T> list)
+        {
+            if (list == null) throw new ArgumentNullException(nameof(list));
+            var result = ConsList<T>.Empty;
+            for (var i = list.Count - 1; i >= 0; i--)
+                result = result.Cons(list[i]);
+            return result;
+        }
+
+        public static ConsList<T> Cons<T>(IEnumerable<T> source)
+        {
+            IList<T> list;
+            T[] array;
+            return (array = source as T[]) != null ? Cons(array)
+                 : (list = source as IList<T>) != null ? Cons(list)
+                 : source.Reverse().Aggregate(ConsList<T>.Empty, (l, e) => l.Cons(e));
+        }
+
+        public static ConsList<T> Cons<T>(params T[] items)
         {
             var result = ConsList<T>.Empty;
             for (var i = items.Length - 1; i >= 0; i--)
