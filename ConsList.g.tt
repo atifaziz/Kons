@@ -24,13 +24,36 @@ namespace Kons
 {
     using System;
 
+    partial class ConsList
+    {
+<#
+    foreach (var e in
+        from i in Enumerable.Range(2, 8)
+        select Enumerable.Range(1, i)
+                         .Select(j => "item" + j.ToString(CultureInfo.InvariantCulture))
+                         .ToArray()
+        into items
+        select new
+        {
+            Items  = items,
+            Params = string.Join(", ", from item in items select "T " + item),
+        })
+    { #>
+        public static ConsList<T> Cons<T>(<#= e.Params #>) =>
+            Cons(<#= string.Join(", ", e.Items) #>, ConsList<T>.Empty);
+        public static ConsList<T> Cons<T>(<#= e.Params #>, ConsList<T> list) =>
+            list.<#= string.Join(".", from item in e.Items.Reverse() select "Prepend(" + item + ")") #>;
+
+<#  } #>
+    }
+
     partial class ConsList<T>
     {
 <#
     var letters = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
-    const int count = 16;
-    var brackets = string.Join(null, Enumerable.Repeat(")", count));
-    for (var i = 2; i < count; i++)
+    const int cadrs = 16;
+    var brackets = string.Join(null, Enumerable.Repeat(")", cadrs));
+    for (var i = 2; i < cadrs; i++)
     { #>
         public TResult Cadr<TResult>(Func<<#= string.Join(", ", Enumerable.Repeat("T", i)) #>, ConsList<T>, TResult> selector)
             => Of(<#= i.ToString(CultureInfo.InvariantCulture) #>, null, $"List has too few items ({Count}) when at least {<#= i.ToString(CultureInfo.InvariantCulture) #>} are expected.")

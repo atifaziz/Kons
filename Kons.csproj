@@ -41,12 +41,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AssemblyInfo.g.tt</DependentUpon>
     </Compile>
-    <Compile Include="ConsList.Cadr.g.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ConsList.Cadr.g.tt</DependentUpon>
-    </Compile>
     <Compile Include="ConsList.cs" />
+    <Compile Include="ConsList.g.cs">
+      <DependentUpon>ConsList.g.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
@@ -56,9 +56,9 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AssemblyInfo.g.cs</LastGenOutput>
     </Content>
-    <Content Include="ConsList.Cadr.g.tt">
+    <Content Include="ConsList.g.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ConsList.Cadr.g.cs</LastGenOutput>
+      <LastGenOutput>ConsList.g.cs</LastGenOutput>
       <DependentUpon>ConsList.cs</DependentUpon>
     </Content>
   </ItemGroup>
