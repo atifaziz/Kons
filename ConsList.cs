@@ -27,18 +27,18 @@ namespace Kons
 
     static partial class ConsList
     {
-        public static ConsList<T> Return<T>(T item) => ConsList<T>.Empty.Cons(item);
+        public static ConsList<T> Return<T>(T item) => ConsList<T>.Empty.Prepend(item);
 
-        public static ConsList<T> Cons<T>(T item1, T item2)                   => Return(item2).Cons(item1);
-        public static ConsList<T> Cons<T>(T item1, T item2, T item3)          => Return(item3).Cons(item2).Cons(item1);
-        public static ConsList<T> Cons<T>(T item1, T item2, T item3, T item4) => Return(item4).Cons(item3).Cons(item2).Cons(item1);
+        public static ConsList<T> Cons<T>(T item1, T item2)                   => Return(item2).Prepend(item1);
+        public static ConsList<T> Cons<T>(T item1, T item2, T item3)          => Return(item3).Prepend(item2).Prepend(item1);
+        public static ConsList<T> Cons<T>(T item1, T item2, T item3, T item4) => Return(item4).Prepend(item3).Prepend(item2).Prepend(item1);
 
         public static ConsList<T> Cons<T>(IList<T> list)
         {
             if (list == null) throw new ArgumentNullException(nameof(list));
             var result = ConsList<T>.Empty;
             for (var i = list.Count - 1; i >= 0; i--)
-                result = result.Cons(list[i]);
+                result = result.Prepend(list[i]);
             return result;
         }
 
@@ -48,14 +48,14 @@ namespace Kons
             T[] array;
             return (array = source as T[]) != null ? Cons(array)
                  : (list = source as IList<T>) != null ? Cons(list)
-                 : source.Reverse().Aggregate(ConsList<T>.Empty, (l, e) => l.Cons(e));
+                 : source.Reverse().Aggregate(ConsList<T>.Empty, (l, e) => l.Prepend(e));
         }
 
         public static ConsList<T> Cons<T>(params T[] items)
         {
             var result = ConsList<T>.Empty;
             for (var i = items.Length - 1; i >= 0; i--)
-                result = result.Cons(items[i]);
+                result = result.Prepend(items[i]);
             return result;
         }
     }
@@ -81,11 +81,11 @@ namespace Kons
         public int Count { get; }
         public bool IsEmpty => _next == null;
 
-        public ConsList<T> Cons(T item) =>
+        public ConsList<T> Prepend(T item) =>
             new ConsList<T>(item, this);
 
-        public ConsList<T> Cons(IEnumerable<T> items) =>
-            items.Aggregate(this, (current, item) => current.Cons(item));
+        public ConsList<T> Prepend(IEnumerable<T> items) =>
+            items.Aggregate(this, (current, item) => current.Prepend(item));
 
         ConsList<T> NonEmpty => Of(1, null, "List is empty.");
 
