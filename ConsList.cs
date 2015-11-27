@@ -32,6 +32,7 @@ namespace Kons
     static partial class ConsList
     {
         public static ConsList<T> Cons<T>(T item) => ConsList<T>.Empty.Prepend(item);
+        public static ConsList<T> Cons<T>(T item, ConsList<T> list) => list.Prepend(item);
 
         public static ConsList<T> Cons<T>(IList<T> list)
         {
