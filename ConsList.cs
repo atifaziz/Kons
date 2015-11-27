@@ -88,6 +88,11 @@ namespace Kons
         public ConsList<T> Prepend(IEnumerable<T> items) =>
             items.Aggregate(this, (current, item) => current.Prepend(item));
 
+        public ConsList<T> Concat(ConsList<T> list)
+            => list.IsEmpty ? this
+             : IsEmpty      ? list
+             : this.Reverse().Aggregate(list, (a, e) => a.Prepend(e));
+
         ConsList<T> NonEmpty => Of(1, null, "List is empty.");
 
         [SuppressMessage("ReSharper", "UnusedParameter.Local")]
