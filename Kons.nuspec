@@ -12,6 +12,7 @@
         <description>.NET Portable Class Library that provides a very simple implementation of an immutable list of (cons) cells.</description>
         <copyright>Copyright &#169; 2013 Atif Aziz. All rights reserved.</copyright>
         <tags>list collections</tags>
+        <releaseNotes>Commit @ $RepoCommit$</releaseNotes>
     </metadata>
     <files>
         <file src="COPYING.txt" target="COPYING.txt" />
