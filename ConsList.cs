@@ -59,6 +59,24 @@ namespace Kons
                 result = result.Prepend(items[i]);
             return result;
         }
+
+        public static TResult CadrWhile<T, TResult>(this ConsList<T> list,
+            Func<T, bool> predicate, Func<ConsList<T>, ConsList<T>, TResult> resultSelector) =>
+            list.CadrWhile((e, i) => predicate(e), resultSelector);
+
+        public static TResult CadrWhile<T, TResult>(this ConsList<T> list,
+            Func<T, int, bool> predicate,
+            Func<ConsList<T>, ConsList<T>, TResult> resultSelector)
+        {
+            if (list == null) throw new ArgumentNullException(nameof(list));
+            if (predicate == null) throw new ArgumentNullException(nameof(predicate));
+            if (resultSelector == null) throw new ArgumentNullException(nameof(resultSelector));
+
+            return list.TakeWhile(predicate)
+                       .Aggregate(new { Head = ConsList<T>.Empty, Tail = list },
+                                  (ht, e) => new { Head = Cons(e, ht.Head), Tail = ht.Tail.Cdr },
+                                  ht => resultSelector(ht.Head, ht.Tail));
+        }
     }
 
     [DebuggerDisplay("Count = {Count}")]
