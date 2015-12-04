@@ -47,6 +47,7 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Include="Deque.cs" />
     <Compile Include="DList.cs" />
   </ItemGroup>
   <ItemGroup>
