@@ -31,6 +31,7 @@ namespace Kons
         T Head { get; }
         T Tail { get; }
         int Count { get; }
+        T this[int index] { get; }
         IDeque<T> Unshift(T value);
         IDeque<T> Shift();
         IDeque<T> Push(T value);
@@ -46,9 +47,25 @@ namespace Kons
             if (deque == null) throw new ArgumentNullException(nameof(deque));
             return string.Join(delimiter, deque);
         }
+
+        public static int IndexOf<T>(this IDeque<T> deque, T item) =>
+            IndexOf(deque, item, null);
+
+        public static int IndexOf<T>(this IDeque<T> deque, T item, IEqualityComparer<T> comparer)
+        {
+            comparer = comparer ?? EqualityComparer<T>.Default;
+            var index = 0;
+            foreach (var e in deque)
+            {
+                if (comparer.Equals(e, item))
+                    return index;
+                index++;
+            }
+            return -1;
+        }
     }
 
-    sealed partial class Deque<T> : IDeque<T>, ICollection<T>
+    sealed partial class Deque<T> : IDeque<T>, IList<T>
     {
         abstract class Dequelette : IEnumerable<T>
         {
@@ -61,6 +78,7 @@ namespace Kons
                 public override T Head { get { throw new InvalidOperationException(); } }
                 public override T Tail { get { throw new InvalidOperationException(); } }
                 public override int Count => 0;
+                public override T this[int index] { get { throw new ArgumentOutOfRangeException(nameof(index)); } }
                 public override Dequelette Unshift(T value) => new One(value);
                 public override Dequelette Shift() { throw new InvalidOperationException(); }
                 public override Dequelette Push(T value) => new One(value);
@@ -73,6 +91,7 @@ namespace Kons
             public abstract int Count { get; }
             public bool IsEmpty => Count == 0;
             public virtual bool IsFull => false;
+            public abstract T this[int index] { get; }
             public abstract Dequelette Unshift(T value);
             public abstract Dequelette Shift();
             public abstract Dequelette Push(T value);
@@ -90,6 +109,7 @@ namespace Kons
             public override T Head => _a;
             public override T Tail => _a;
             public override int Count => 1;
+            public override T this[int index] => _a;
             public override Dequelette Unshift(T value) => new Two(value, _a);
             public override Dequelette Shift() => Empty;
             public override Dequelette Push(T value) => new Two(_a, value);
@@ -103,6 +123,7 @@ namespace Kons
             public override T Head { get; }
             public override T Tail { get; }
             public override int Count => 2;
+            public override T this[int index] => index == 0 ? Head : Tail;
             public override Dequelette Unshift(T value) => new Three(value, Head, Tail);
             public override Dequelette Shift() => new One(Tail);
             public override Dequelette Push(T value) => new Three(Head, Tail, value);
@@ -119,6 +140,7 @@ namespace Kons
             public override T Head => _a;
             public override T Tail => _c;
             public override int Count => 3;
+            public override T this[int index] => index == 0 ? _a : index == 1 ? _b : _c;
             public override Dequelette Unshift(T value) => new Four(value, _a, _b, _c);
             public override Dequelette Shift() => new Two(_b, _c);
             public override Dequelette Push(T value) => new Four(_a, _b, _c, value);
@@ -137,6 +159,7 @@ namespace Kons
             public override T Tail => _d;
             public override int Count => 4;
             public override bool IsFull => true;
+            public override T this[int index] => index == 0 ? _a : index == 1 ? _b : index == 2 ? _c : _d;
             public override Dequelette Unshift(T value) { throw new InvalidOperationException(); }
             public override Dequelette Shift() => new Three(_b, _c, _d);
             public override Dequelette Push(T value) { throw new InvalidOperationException(); }
@@ -154,6 +177,7 @@ namespace Kons
             public T Head { get { throw new InvalidOperationException(); } }
             public T Tail { get { throw new InvalidOperationException(); } }
             public int Count => 0;
+            public T this[int index] { get { throw new ArgumentOutOfRangeException(nameof(index)); } }
             public IDeque<T> Unshift(T value) => new Deque<T>(1, new One(value), Deque<Dequelette>.Empty, Dequelette.Empty);
             public IDeque<T> Shift() { throw new InvalidOperationException(); }
             public IDeque<T> Push(T value) => new Deque<T>(1, Dequelette.Empty, Deque<Dequelette>.Empty, new One(value));
@@ -180,6 +204,29 @@ namespace Kons
         public T    Tail => _tail.Tail;
         public int  Count { get; }
         public bool IsEmpty => Count == 0;
+
+        public T this[int index]
+        {
+            get
+            {
+                if (index < 0 || index >= Count)
+                    throw new ArgumentOutOfRangeException(nameof(index));
+
+                if (index < _head.Count)
+                    return _head[index];
+
+                index -= _head.Count;
+
+                foreach (var d in _middle)
+                {
+                    if (index < d.Count)
+                        return d[index];
+                    index -= d.Count;
+                }
+
+                return _tail[index];
+            }
+        }
 
         public IDeque<T> Unshift(T value)
         {
@@ -244,11 +291,22 @@ namespace Kons
             return array;
         }
 
+        public int IndexOf(T item) => this.IndexOf(item, comparer: null);
+
         bool ICollection<T>.IsReadOnly => true;
 
         void ICollection<T>.Add(T item) { throw ReadOnlyError(); }
         void ICollection<T>.Clear() { throw ReadOnlyError(); }
         bool ICollection<T>.Remove(T item) { throw ReadOnlyError(); }
+
+        void IList<T>.Insert(int index, T item) { throw ReadOnlyError(); }
+        void IList<T>.RemoveAt(int index) { throw ReadOnlyError(); }
+
+        T IList<T>.this[int index]
+        {
+            get { return this[index]; }
+            set { throw ReadOnlyError(); }
+        }
 
         static NotSupportedException ReadOnlyError() => new NotSupportedException("Cannot modify a read-only list.");
     }
