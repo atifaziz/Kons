@@ -310,12 +310,4 @@ namespace Kons
 
         static NotSupportedException ReadOnlyError() => new NotSupportedException("Cannot modify a read-only list.");
     }
-
-    #if KONS_PUBLIC
-
-    public partial class Deque { }
-    public partial class Deque<T> { }
-    public partial interface IDeque<T> { }
-
-    #endif
 }

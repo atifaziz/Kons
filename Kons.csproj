@@ -49,6 +49,7 @@
     </Compile>
     <Compile Include="Deque.cs" />
     <Compile Include="DList.cs" />
+    <Compile Include="Public.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

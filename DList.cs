@@ -33,8 +33,4 @@ namespace Kons
         public static DList<T> Snoc<T>(this DList<T> xs, T x)           => xs.Append(Singleton(x));
         public static ConsList<T> ToList<T>(this DList<T> hlist)        => hlist(ConsList<T>.Empty);
     }
-
-    #if KONS_PUBLIC
-    public partial class DList { }
-    #endif
 }

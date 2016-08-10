@@ -175,11 +175,4 @@ namespace Kons
 
         static NotSupportedException ReadOnlyError() => new NotSupportedException("Cannot modify a read-only list.");
     }
-
-    #if KONS_PUBLIC
-
-    public partial class ConsList { }
-    public partial class ConsList<T> { }
-
-    #endif
 }
