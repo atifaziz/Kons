@@ -19,9 +19,12 @@ namespace Kons
     // Difference (John Huges) List inspired from:
     // http://stackoverflow.com/a/2484281/6682
 
-    public delegate ConsList<T> DList<T>(ConsList<T> list);
+    #if KONS_PUBLIC
+    public
+    #endif
+    delegate ConsList<T> DList<T>(ConsList<T> list);
 
-    public static class DList
+    static partial class DList
     {
         public static DList<T> Empty<T>()                               => xs => xs;
         public static DList<T> Append<T>(this DList<T> xs, DList<T> ys) => tail => xs(ys(tail));
@@ -30,4 +33,8 @@ namespace Kons
         public static DList<T> Snoc<T>(this DList<T> xs, T x)           => xs.Append(Singleton(x));
         public static ConsList<T> ToList<T>(this DList<T> hlist)        => hlist(ConsList<T>.Empty);
     }
+
+    #if KONS_PUBLIC
+    public partial class DList { }
+    #endif
 }
