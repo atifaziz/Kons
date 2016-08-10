@@ -1,0 +1,47 @@
+﻿{
+    "name": "Kons",
+    "version": "1.0.0-beta-*",
+    "title": "Simple Cons List",
+    "description": ".NET Portable Class Library that provides a very simple implementation of an immutable list of (cons) cells.",
+    "authos": [ "Atif Aziz" ],
+    "copyright": "Copyright \u00a9 2013 Atif Aziz. All rights reserved.",
+
+    "packOptions": {
+        "projectUrl": "https://github.com/atifaziz/Kons",
+        "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
+        "owners": [ "Atif Aziz" ],
+        "tags": [ "collections", "list" ],
+        "files": {
+            "include": "COPYING.txt"
+        }
+    },
+
+    "dependencies": {
+        "System.Collections": "4.0.11",
+        "System.Diagnostics.Debug": "4.0.11",
+        "System.Diagnostics.Tools": "4.0.1",
+        "System.Linq": "4.1.0"
+    },
+
+    "buildOptions": {
+        "define": [ "KONS_PUBLIC" ],
+        "compile": {
+            "exclude": "*",
+            "includeFiles": [
+                "AssemblyInfo.cs",
+                "AssemblyInfo.g.cs",
+                "ConsList.cs",
+                "ConsList.g.cs",
+                "Deque.cs",
+                "DList.cs",
+                "Public.cs"
+            ]
+        }
+    },
+
+    "frameworks": {
+        "netstandard1.0": {
+        }
+    }
+}
+
