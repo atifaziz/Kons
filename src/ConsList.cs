@@ -120,7 +120,7 @@ namespace Kons
             return this;
         }
 
-        public Tuple<T, ConsList<T>> Cadr() => Cadr((a, ar) => Tuple.Create(a, ar));
+        public (T Car, ConsList<T> Cdr) Cadr() => (Car, Cdr);
         public TResult Cadr<TResult>(Func<T, ConsList<T>, TResult> selector) => selector(Car, Cdr);
 
         public T Car => NonEmpty._item;
