@@ -4,8 +4,8 @@
 [![NuGet][nuget-badge]][nuget-pkg]
 [![MyGet][myget-badge]][edge-pkgs]
 
-Kons is a .NET PCL (Portable Class Library) that provides a simple
-implementation of a list of (cons) cells.
+Kons is a .NET Standard Library that provides a simple implementation of a
+list of (cons) cells.
 
 
   [build-badge]: https://img.shields.io/appveyor/ci/raboof/kons.svg
