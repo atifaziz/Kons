@@ -42,11 +42,8 @@ namespace Kons
     {
         public static IDeque<T> Singleton<T>(T value) => Deque<T>.Empty.Unshift(value);
 
-        public static string ToDelimitedString<T>(this IDeque<T> deque, string delimiter)
-        {
-            if (deque == null) throw new ArgumentNullException(nameof(deque));
-            return string.Join(delimiter, deque);
-        }
+        public static string ToDelimitedString<T>(this IDeque<T> deque, string delimiter) =>
+            string.Join(delimiter, deque ?? throw new ArgumentNullException(nameof(deque)));
 
         public static int IndexOf<T>(this IDeque<T> deque, T item) =>
             IndexOf(deque, item, null);
@@ -75,14 +72,14 @@ namespace Kons
 
             sealed class EmptyDequelette : Dequelette
             {
-                public override T Head { get { throw new InvalidOperationException(); } }
-                public override T Tail { get { throw new InvalidOperationException(); } }
+                public override T Head => throw new InvalidOperationException();
+                public override T Tail => throw new InvalidOperationException();
                 public override int Count => 0;
-                public override T this[int index] { get { throw new ArgumentOutOfRangeException(nameof(index)); } }
+                public override T this[int index] => throw new ArgumentOutOfRangeException(nameof(index));
                 public override Dequelette Unshift(T value) => new One(value);
-                public override Dequelette Shift() { throw new InvalidOperationException(); }
+                public override Dequelette Shift() => throw new InvalidOperationException();
                 public override Dequelette Push(T value) => new One(value);
-                public override Dequelette Pop() { throw new InvalidOperationException(); }
+                public override Dequelette Pop() => throw new InvalidOperationException();
                 public override IEnumerator<T> GetEnumerator() { yield break; }
             }
 
@@ -105,7 +102,7 @@ namespace Kons
         {
             readonly T _a;
 
-            public One(T a) { _a = a; }
+            public One(T a) => _a = a;
             public override T Head => _a;
             public override T Tail => _a;
             public override int Count => 1;
@@ -119,7 +116,7 @@ namespace Kons
 
         sealed class Two : Dequelette
         {
-            public Two(T a, T b) { Head = a; Tail = b; }
+            public Two(T a, T b) => (Head, Tail) = (a, b);
             public override T Head { get; }
             public override T Tail { get; }
             public override int Count => 2;
@@ -136,7 +133,7 @@ namespace Kons
         {
             readonly T _a; readonly T _b; readonly T _c;
 
-            public Three(T a, T b, T c) { _a = a; _b = b; _c = c; }
+            public Three(T a, T b, T c) => (_a, _b, _c) = (a, b, c);
             public override T Head => _a;
             public override T Tail => _c;
             public override int Count => 3;
@@ -154,15 +151,15 @@ namespace Kons
         {
             readonly T _a; readonly T _b; readonly T _c; readonly T _d;
 
-            public Four(T a, T b, T c, T d) { _a = a; _b = b; _c = c; _d = d; }
+            public Four(T a, T b, T c, T d) => (_a, _b, _c, _d) = (a, b, c, d);
             public override T Head => _a;
             public override T Tail => _d;
             public override int Count => 4;
             public override bool IsFull => true;
             public override T this[int index] => index == 0 ? _a : index == 1 ? _b : index == 2 ? _c : _d;
-            public override Dequelette Unshift(T value) { throw new InvalidOperationException(); }
+            public override Dequelette Unshift(T value) => throw new InvalidOperationException();
             public override Dequelette Shift() => new Three(_b, _c, _d);
-            public override Dequelette Push(T value) { throw new InvalidOperationException(); }
+            public override Dequelette Push(T value) => throw new InvalidOperationException();
             public override Dequelette Pop() => new Three(_a, _b, _c);
             public override IEnumerator<T> GetEnumerator() { yield return _a;
                                                              yield return _b;
@@ -174,14 +171,14 @@ namespace Kons
 
         sealed class EmptyDeque : IDeque<T>
         {
-            public T Head { get { throw new InvalidOperationException(); } }
-            public T Tail { get { throw new InvalidOperationException(); } }
+            public T Head => throw new InvalidOperationException();
+            public T Tail => throw new InvalidOperationException();
             public int Count => 0;
-            public T this[int index] { get { throw new ArgumentOutOfRangeException(nameof(index)); } }
+            public T this[int index] => throw new ArgumentOutOfRangeException(nameof(index));
             public IDeque<T> Unshift(T value) => new Deque<T>(1, new One(value), Deque<Dequelette>.Empty, Dequelette.Empty);
-            public IDeque<T> Shift() { throw new InvalidOperationException(); }
+            public IDeque<T> Shift() => throw new InvalidOperationException();
             public IDeque<T> Push(T value) => new Deque<T>(1, Dequelette.Empty, Deque<Dequelette>.Empty, new One(value));
-            public IDeque<T> Pop() { throw new InvalidOperationException(); }
+            public IDeque<T> Pop() => throw new InvalidOperationException();
             public IEnumerator<T> GetEnumerator() { yield break; }
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         }
@@ -304,8 +301,8 @@ namespace Kons
 
         T IList<T>.this[int index]
         {
-            get { return this[index]; }
-            set { throw ReadOnlyError(); }
+            get => this[index];
+            set => throw ReadOnlyError();
         }
 
         static NotSupportedException ReadOnlyError() => new NotSupportedException("Cannot modify a read-only list.");
