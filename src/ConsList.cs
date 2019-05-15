@@ -91,9 +91,8 @@ namespace Kons
 
         ConsList(T item, ConsList<T> tail)
         {
-            if (tail == null) throw new ArgumentNullException(nameof(tail));
+            _next = tail ?? throw new ArgumentNullException(nameof(tail));
             _item = item;
-            _next = tail;
             Count = _next.Count + 1;
         }
 
