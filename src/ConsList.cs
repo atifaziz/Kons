@@ -79,7 +79,7 @@ namespace Kons
         }
     }
 
-    [DebuggerDisplay("Count = {Count}")]
+    [DebuggerDisplay("Count = {" + nameof(Count) + "}")]
     sealed partial class ConsList<T> : ICollection<T>, IEquatable<ConsList<T>>
     {
         public static readonly ConsList<T> Empty = new ConsList<T>();
