@@ -44,13 +44,9 @@ namespace Kons
         }
 
         public static ConsList<T> Cons<T>(IEnumerable<T> source)
-        {
-            IList<T> list;
-            T[] array;
-            return (array = source as T[]) != null ? Cons(array)
-                 : (list = source as IList<T>) != null ? Cons(list)
-                 : source.Reverse().Aggregate(ConsList<T>.Empty, (l, e) => l.Prepend(e));
-        }
+            => source is T[] array ? Cons(array)
+             : source is IList<T> list ? Cons(list)
+             : source.Reverse().Aggregate(ConsList<T>.Empty, (l, e) => l.Prepend(e));
 
         public static ConsList<T> Cons<T>(params T[] items)
         {
