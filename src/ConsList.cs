@@ -80,7 +80,10 @@ namespace Kons
     }
 
     [DebuggerDisplay("Count = {" + nameof(Count) + "}")]
-    sealed partial class ConsList<T> : ICollection<T>, IEquatable<ConsList<T>>
+    sealed partial class ConsList<T> :
+        IEquatable<ConsList<T>>,
+        IReadOnlyCollection<T>,
+        ICollection<T>
     {
         public static readonly ConsList<T> Empty = new ConsList<T>();
 
