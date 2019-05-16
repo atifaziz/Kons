@@ -81,13 +81,14 @@ namespace Kons
                 => <#= string.Join(@"
                 => ", new string[0].Concat (letters.Skip(1).Zip(letters, (l, p) => p + "r.Cadr((" + l + ", " + l + "r)").Take(i - 1))) #> => selector(<#= string.Join(", ", letters.Take(i)) #>, <#= letters.Skip(i - 1).First() #>r)<#= brackets.Substring(0, i) #>;
 
-        public void Deconstruct(<#= string.Join(", ", from n in ordinalNumbers.Take(i) select "out T " + n) #>, out ConsList<T> rest)
+        public void Deconstruct(<#= string.Join(", ", from n in ordinalNumbers.Take(i) select "out T " + n) #>, out ConsList<T> rest, out int count)
         {
-            var list = Of(<#= istr #>, null, $"List has too few items ({Count}) when at least {<#= istr #>} are expected.");
+            count = Count;
+            var list = this;
 <#      var maxOrdinalWidth = ordinalNumbers.Take(i).Max(o => o.Length);
         foreach (var n in ordinalNumbers.Take(i))
         { #>
-            (<#= n.PadRight(maxOrdinalWidth) #>, list) = list;
+            (<#= n.PadRight(maxOrdinalWidth) #>, list, _) = list;
 <#      } #>
             rest = list;
         }

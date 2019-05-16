@@ -100,17 +100,26 @@ Console.WriteLine($"Array = [{string.Join(", ", array)}]");
 Deconstruction:
 
 ```c#
-var (head, tail) = list;
+var (head, tail, _) = list;
 Console.WriteLine($"Head = {head}; Tail = {Format(tail)}");
 // => Head = 1; Tail = [2, 3, 4, 5]
 
-var (fst, snd, rest) = list;
+var (fst, snd, rest, _) = list;
 Console.WriteLine($"First = {fst}; Second = {fst}; Rest = {Format(rest)}");
 // => First = 1; Second = 1; Rest = [3, 4, 5]
 ```
 
-Deconstruction throws an `InvalidOperationException` if the list has fewer
-than requested elements.
+Note that deconstruction returns `Count` as the last element (discarded
+above). When the list contains fewer elements than requested for
+deconstruction then the corresponding items of the tuple will be initialized
+to their default value. The count can then be helpful for validation as shown
+here:
+
+```c#
+var (x, y, _, count) = ConsList.Cons(42);
+if (count < 2)
+    throw new Exception("Not enough elements in list.");
+```
 
 Folding:
 
