@@ -73,8 +73,8 @@ namespace Kons
             if (resultSelector == null) throw new ArgumentNullException(nameof(resultSelector));
 
             return list.TakeWhile(predicate)
-                       .Aggregate(new { Head = ConsList<T>.Empty, Tail = list },
-                                  (ht, e) => new { Head = Cons(e, ht.Head), Tail = ht.Tail.Cdr },
+                       .Aggregate((Head: ConsList<T>.Empty, Tail: list),
+                                  (ht, e) => (Cons(e, ht.Head), ht.Tail.Cdr),
                                   ht => resultSelector(ht.Head, ht.Tail));
         }
     }
