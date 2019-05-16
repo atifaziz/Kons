@@ -109,11 +109,28 @@ namespace Kons
                      .Cadr((a, ar)
                 => ar.Cadr((b, br) => selector(a, b, br)));
 
+        public void Deconstruct(out T first, out T second, out ConsList<T> rest)
+        {
+            var list = Of(2, null, $"List has too few items ({Count}) when at least {2} are expected.");
+            (first , list) = list;
+            (second, list) = list;
+            rest = list;
+        }
+
         public TResult Cadr<TResult>(Func<T, T, T, ConsList<T>, TResult> selector)
             => Of(3, null, $"List has too few items ({Count}) when at least {3} are expected.")
                      .Cadr((a, ar)
                 => ar.Cadr((b, br)
                 => br.Cadr((c, cr) => selector(a, b, c, cr))));
+
+        public void Deconstruct(out T first, out T second, out T third, out ConsList<T> rest)
+        {
+            var list = Of(3, null, $"List has too few items ({Count}) when at least {3} are expected.");
+            (first , list) = list;
+            (second, list) = list;
+            (third , list) = list;
+            rest = list;
+        }
 
         public TResult Cadr<TResult>(Func<T, T, T, T, ConsList<T>, TResult> selector)
             => Of(4, null, $"List has too few items ({Count}) when at least {4} are expected.")
@@ -121,6 +138,16 @@ namespace Kons
                 => ar.Cadr((b, br)
                 => br.Cadr((c, cr)
                 => cr.Cadr((d, dr) => selector(a, b, c, d, dr)))));
+
+        public void Deconstruct(out T first, out T second, out T third, out T fourth, out ConsList<T> rest)
+        {
+            var list = Of(4, null, $"List has too few items ({Count}) when at least {4} are expected.");
+            (first , list) = list;
+            (second, list) = list;
+            (third , list) = list;
+            (fourth, list) = list;
+            rest = list;
+        }
 
         public TResult Cadr<TResult>(Func<T, T, T, T, T, ConsList<T>, TResult> selector)
             => Of(5, null, $"List has too few items ({Count}) when at least {5} are expected.")
@@ -130,6 +157,17 @@ namespace Kons
                 => cr.Cadr((d, dr)
                 => dr.Cadr((e, er) => selector(a, b, c, d, e, er))))));
 
+        public void Deconstruct(out T first, out T second, out T third, out T fourth, out T fifth, out ConsList<T> rest)
+        {
+            var list = Of(5, null, $"List has too few items ({Count}) when at least {5} are expected.");
+            (first , list) = list;
+            (second, list) = list;
+            (third , list) = list;
+            (fourth, list) = list;
+            (fifth , list) = list;
+            rest = list;
+        }
+
         public TResult Cadr<TResult>(Func<T, T, T, T, T, T, ConsList<T>, TResult> selector)
             => Of(6, null, $"List has too few items ({Count}) when at least {6} are expected.")
                      .Cadr((a, ar)
@@ -138,6 +176,18 @@ namespace Kons
                 => cr.Cadr((d, dr)
                 => dr.Cadr((e, er)
                 => er.Cadr((f, fr) => selector(a, b, c, d, e, f, fr)))))));
+
+        public void Deconstruct(out T first, out T second, out T third, out T fourth, out T fifth, out T sixth, out ConsList<T> rest)
+        {
+            var list = Of(6, null, $"List has too few items ({Count}) when at least {6} are expected.");
+            (first , list) = list;
+            (second, list) = list;
+            (third , list) = list;
+            (fourth, list) = list;
+            (fifth , list) = list;
+            (sixth , list) = list;
+            rest = list;
+        }
 
         public TResult Cadr<TResult>(Func<T, T, T, T, T, T, T, ConsList<T>, TResult> selector)
             => Of(7, null, $"List has too few items ({Count}) when at least {7} are expected.")
@@ -149,6 +199,19 @@ namespace Kons
                 => er.Cadr((f, fr)
                 => fr.Cadr((g, gr) => selector(a, b, c, d, e, f, g, gr))))))));
 
+        public void Deconstruct(out T first, out T second, out T third, out T fourth, out T fifth, out T sixth, out T seventh, out ConsList<T> rest)
+        {
+            var list = Of(7, null, $"List has too few items ({Count}) when at least {7} are expected.");
+            (first  , list) = list;
+            (second , list) = list;
+            (third  , list) = list;
+            (fourth , list) = list;
+            (fifth  , list) = list;
+            (sixth  , list) = list;
+            (seventh, list) = list;
+            rest = list;
+        }
+
         public TResult Cadr<TResult>(Func<T, T, T, T, T, T, T, T, ConsList<T>, TResult> selector)
             => Of(8, null, $"List has too few items ({Count}) when at least {8} are expected.")
                      .Cadr((a, ar)
@@ -159,6 +222,20 @@ namespace Kons
                 => er.Cadr((f, fr)
                 => fr.Cadr((g, gr)
                 => gr.Cadr((h, hr) => selector(a, b, c, d, e, f, g, h, hr)))))))));
+
+        public void Deconstruct(out T first, out T second, out T third, out T fourth, out T fifth, out T sixth, out T seventh, out T eighth, out ConsList<T> rest)
+        {
+            var list = Of(8, null, $"List has too few items ({Count}) when at least {8} are expected.");
+            (first  , list) = list;
+            (second , list) = list;
+            (third  , list) = list;
+            (fourth , list) = list;
+            (fifth  , list) = list;
+            (sixth  , list) = list;
+            (seventh, list) = list;
+            (eighth , list) = list;
+            rest = list;
+        }
 
         public TResult Cadr<TResult>(Func<T, T, T, T, T, T, T, T, T, ConsList<T>, TResult> selector)
             => Of(9, null, $"List has too few items ({Count}) when at least {9} are expected.")
@@ -172,6 +249,21 @@ namespace Kons
                 => gr.Cadr((h, hr)
                 => hr.Cadr((i, ir) => selector(a, b, c, d, e, f, g, h, i, ir))))))))));
 
+        public void Deconstruct(out T first, out T second, out T third, out T fourth, out T fifth, out T sixth, out T seventh, out T eighth, out T ninth, out ConsList<T> rest)
+        {
+            var list = Of(9, null, $"List has too few items ({Count}) when at least {9} are expected.");
+            (first  , list) = list;
+            (second , list) = list;
+            (third  , list) = list;
+            (fourth , list) = list;
+            (fifth  , list) = list;
+            (sixth  , list) = list;
+            (seventh, list) = list;
+            (eighth , list) = list;
+            (ninth  , list) = list;
+            rest = list;
+        }
+
         public TResult Cadr<TResult>(Func<T, T, T, T, T, T, T, T, T, T, ConsList<T>, TResult> selector)
             => Of(10, null, $"List has too few items ({Count}) when at least {10} are expected.")
                      .Cadr((a, ar)
@@ -184,6 +276,22 @@ namespace Kons
                 => gr.Cadr((h, hr)
                 => hr.Cadr((i, ir)
                 => ir.Cadr((j, jr) => selector(a, b, c, d, e, f, g, h, i, j, jr)))))))))));
+
+        public void Deconstruct(out T first, out T second, out T third, out T fourth, out T fifth, out T sixth, out T seventh, out T eighth, out T ninth, out T tenth, out ConsList<T> rest)
+        {
+            var list = Of(10, null, $"List has too few items ({Count}) when at least {10} are expected.");
+            (first  , list) = list;
+            (second , list) = list;
+            (third  , list) = list;
+            (fourth , list) = list;
+            (fifth  , list) = list;
+            (sixth  , list) = list;
+            (seventh, list) = list;
+            (eighth , list) = list;
+            (ninth  , list) = list;
+            (tenth  , list) = list;
+            rest = list;
+        }
 
         public TResult Cadr<TResult>(Func<T, T, T, T, T, T, T, T, T, T, T, ConsList<T>, TResult> selector)
             => Of(11, null, $"List has too few items ({Count}) when at least {11} are expected.")
@@ -199,6 +307,23 @@ namespace Kons
                 => ir.Cadr((j, jr)
                 => jr.Cadr((k, kr) => selector(a, b, c, d, e, f, g, h, i, j, k, kr))))))))))));
 
+        public void Deconstruct(out T first, out T second, out T third, out T fourth, out T fifth, out T sixth, out T seventh, out T eighth, out T ninth, out T tenth, out T eleventh, out ConsList<T> rest)
+        {
+            var list = Of(11, null, $"List has too few items ({Count}) when at least {11} are expected.");
+            (first   , list) = list;
+            (second  , list) = list;
+            (third   , list) = list;
+            (fourth  , list) = list;
+            (fifth   , list) = list;
+            (sixth   , list) = list;
+            (seventh , list) = list;
+            (eighth  , list) = list;
+            (ninth   , list) = list;
+            (tenth   , list) = list;
+            (eleventh, list) = list;
+            rest = list;
+        }
+
         public TResult Cadr<TResult>(Func<T, T, T, T, T, T, T, T, T, T, T, T, ConsList<T>, TResult> selector)
             => Of(12, null, $"List has too few items ({Count}) when at least {12} are expected.")
                      .Cadr((a, ar)
@@ -213,6 +338,24 @@ namespace Kons
                 => ir.Cadr((j, jr)
                 => jr.Cadr((k, kr)
                 => kr.Cadr((l, lr) => selector(a, b, c, d, e, f, g, h, i, j, k, l, lr)))))))))))));
+
+        public void Deconstruct(out T first, out T second, out T third, out T fourth, out T fifth, out T sixth, out T seventh, out T eighth, out T ninth, out T tenth, out T eleventh, out T twelfth, out ConsList<T> rest)
+        {
+            var list = Of(12, null, $"List has too few items ({Count}) when at least {12} are expected.");
+            (first   , list) = list;
+            (second  , list) = list;
+            (third   , list) = list;
+            (fourth  , list) = list;
+            (fifth   , list) = list;
+            (sixth   , list) = list;
+            (seventh , list) = list;
+            (eighth  , list) = list;
+            (ninth   , list) = list;
+            (tenth   , list) = list;
+            (eleventh, list) = list;
+            (twelfth , list) = list;
+            rest = list;
+        }
 
         public TResult Cadr<TResult>(Func<T, T, T, T, T, T, T, T, T, T, T, T, T, ConsList<T>, TResult> selector)
             => Of(13, null, $"List has too few items ({Count}) when at least {13} are expected.")
@@ -230,6 +373,25 @@ namespace Kons
                 => kr.Cadr((l, lr)
                 => lr.Cadr((m, mr) => selector(a, b, c, d, e, f, g, h, i, j, k, l, m, mr))))))))))))));
 
+        public void Deconstruct(out T first, out T second, out T third, out T fourth, out T fifth, out T sixth, out T seventh, out T eighth, out T ninth, out T tenth, out T eleventh, out T twelfth, out T thirteenth, out ConsList<T> rest)
+        {
+            var list = Of(13, null, $"List has too few items ({Count}) when at least {13} are expected.");
+            (first     , list) = list;
+            (second    , list) = list;
+            (third     , list) = list;
+            (fourth    , list) = list;
+            (fifth     , list) = list;
+            (sixth     , list) = list;
+            (seventh   , list) = list;
+            (eighth    , list) = list;
+            (ninth     , list) = list;
+            (tenth     , list) = list;
+            (eleventh  , list) = list;
+            (twelfth   , list) = list;
+            (thirteenth, list) = list;
+            rest = list;
+        }
+
         public TResult Cadr<TResult>(Func<T, T, T, T, T, T, T, T, T, T, T, T, T, T, ConsList<T>, TResult> selector)
             => Of(14, null, $"List has too few items ({Count}) when at least {14} are expected.")
                      .Cadr((a, ar)
@@ -246,6 +408,26 @@ namespace Kons
                 => kr.Cadr((l, lr)
                 => lr.Cadr((m, mr)
                 => mr.Cadr((n, nr) => selector(a, b, c, d, e, f, g, h, i, j, k, l, m, n, nr)))))))))))))));
+
+        public void Deconstruct(out T first, out T second, out T third, out T fourth, out T fifth, out T sixth, out T seventh, out T eighth, out T ninth, out T tenth, out T eleventh, out T twelfth, out T thirteenth, out T fourteenth, out ConsList<T> rest)
+        {
+            var list = Of(14, null, $"List has too few items ({Count}) when at least {14} are expected.");
+            (first     , list) = list;
+            (second    , list) = list;
+            (third     , list) = list;
+            (fourth    , list) = list;
+            (fifth     , list) = list;
+            (sixth     , list) = list;
+            (seventh   , list) = list;
+            (eighth    , list) = list;
+            (ninth     , list) = list;
+            (tenth     , list) = list;
+            (eleventh  , list) = list;
+            (twelfth   , list) = list;
+            (thirteenth, list) = list;
+            (fourteenth, list) = list;
+            rest = list;
+        }
 
         public TResult Cadr<TResult>(Func<T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, ConsList<T>, TResult> selector)
             => Of(15, null, $"List has too few items ({Count}) when at least {15} are expected.")
@@ -265,5 +447,25 @@ namespace Kons
                 => mr.Cadr((n, nr)
                 => nr.Cadr((o, or) => selector(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, or))))))))))))))));
 
+        public void Deconstruct(out T first, out T second, out T third, out T fourth, out T fifth, out T sixth, out T seventh, out T eighth, out T ninth, out T tenth, out T eleventh, out T twelfth, out T thirteenth, out T fourteenth, out T fifteenth, out ConsList<T> rest)
+        {
+            var list = Of(15, null, $"List has too few items ({Count}) when at least {15} are expected.");
+            (first     , list) = list;
+            (second    , list) = list;
+            (third     , list) = list;
+            (fourth    , list) = list;
+            (fifth     , list) = list;
+            (sixth     , list) = list;
+            (seventh   , list) = list;
+            (eighth    , list) = list;
+            (ninth     , list) = list;
+            (tenth     , list) = list;
+            (eleventh  , list) = list;
+            (twelfth   , list) = list;
+            (thirteenth, list) = list;
+            (fourteenth, list) = list;
+            (fifteenth , list) = list;
+            rest = list;
+        }
     }
 }

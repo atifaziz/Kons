@@ -48,19 +48,49 @@ namespace Kons
     }
 
     partial class ConsList<T>
-    {
-<#
+    {<#
     var letters = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
+    var ordinalNumbers = new[]
+    {
+        "first",
+        "second",
+        "third",
+        "fourth",
+        "fifth",
+        "sixth",
+        "seventh",
+        "eighth",
+        "ninth",
+        "tenth",
+        "eleventh",
+        "twelfth",
+        "thirteenth",
+        "fourteenth",
+        "fifteenth",
+        "sixteenth",
+    };
     const int cadrs = 16;
     var brackets = string.Join(null, Enumerable.Repeat(")", cadrs));
     for (var i = 2; i < cadrs; i++)
-    { #>
+    {
+        var istr = i.ToString(CultureInfo.InvariantCulture); #>
+
         public TResult Cadr<TResult>(Func<<#= string.Join(", ", Enumerable.Repeat("T", i)) #>, ConsList<T>, TResult> selector)
-            => Of(<#= i.ToString(CultureInfo.InvariantCulture) #>, null, $"List has too few items ({Count}) when at least {<#= i.ToString(CultureInfo.InvariantCulture) #>} are expected.")
+            => Of(<#= istr #>, null, $"List has too few items ({Count}) when at least {<#= istr #>} are expected.")
                      .Cadr((a, ar)
                 => <#= string.Join(@"
                 => ", new string[0].Concat (letters.Skip(1).Zip(letters, (l, p) => p + "r.Cadr((" + l + ", " + l + "r)").Take(i - 1))) #> => selector(<#= string.Join(", ", letters.Take(i)) #>, <#= letters.Skip(i - 1).First() #>r)<#= brackets.Substring(0, i) #>;
 
+        public void Deconstruct(<#= string.Join(", ", from n in ordinalNumbers.Take(i) select "out T " + n) #>, out ConsList<T> rest)
+        {
+            var list = Of(<#= istr #>, null, $"List has too few items ({Count}) when at least {<#= istr #>} are expected.");
+<#      var maxOrdinalWidth = ordinalNumbers.Take(i).Max(o => o.Length);
+        foreach (var n in ordinalNumbers.Take(i))
+        { #>
+            (<#= n.PadRight(maxOrdinalWidth) #>, list) = list;
+<#      } #>
+            rest = list;
+        }
 <#  }#>
     }
 }

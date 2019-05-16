@@ -122,7 +122,8 @@ namespace Kons
         public (T Car, ConsList<T> Cdr) Cadr() => (Car, Cdr);
         public TResult Cadr<TResult>(Func<T, ConsList<T>, TResult> selector) => selector(Car, Cdr);
 
-        public void Deconstruct(out T car, out ConsList<T> cdr) => (car, cdr) = (Car, Cdr);
+        public void Deconstruct(out T car, out ConsList<T> cdr) =>
+            (car, cdr) = Of(1, null, $"List has too few items ({Count}) when at least {1} are expected.").Cadr();
 
         public T Car => NonEmpty._item;
         public ConsList<T> Cdr => NonEmpty._next;
