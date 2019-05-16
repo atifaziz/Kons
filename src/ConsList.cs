@@ -113,10 +113,15 @@ namespace Kons
             if (predicate == null) throw new ArgumentNullException(nameof(predicate));
             if (resultSelector == null) throw new ArgumentNullException(nameof(resultSelector));
 
-            return list.TakeWhile(predicate)
-                       .Aggregate((Head: ConsList<T>.Empty, Tail: list),
-                                  (ht, e) => (Cons(e, ht.Head), ht.Tail.Cdr),
-                                  ht => resultSelector(ConsList<T>.Empty.Prepend(ht.Head), ht.Tail));
+            List<T> cars = null;
+
+            foreach (var item in list.TakeWhile(predicate))
+            {
+                (cars ?? (cars = new List<T>())).Add(item);
+                list = list.Cdr;
+            }
+
+            return resultSelector(cars is List<T> hs ? From(hs) : ConsList<T>.Empty, list);
         }
     }
 
@@ -146,7 +151,7 @@ namespace Kons
         public ConsList<T> Prepend(T item) =>
             new ConsList<T>(item, this);
 
-        public ConsList<T> Prepend(IEnumerable<T> items) =>
+        public ConsList<T> PrependAll(IEnumerable<T> items) =>
             items.Aggregate(this, (current, item) => current.Prepend(item));
 
         public ConsList<T> Concat(ConsList<T> list)
