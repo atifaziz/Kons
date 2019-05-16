@@ -60,13 +60,28 @@ namespace Kons
             return result;
         }
 
-        public static TResult CadrWhile<T, TResult>(this ConsList<T> list,
-            Func<T, bool> predicate, Func<ConsList<T>, ConsList<T>, TResult> resultSelector) =>
+        public static (ConsList<T>, ConsList<T>)
+            CadrWhile<T>(this ConsList<T> list,
+                         Func<T, bool> predicate) =>
+            list.CadrWhile(predicate, ValueTuple.Create);
+
+        public static (ConsList<T>, ConsList<T>)
+            CadrWhile<T>(this ConsList<T> list,
+                         Func<T, int, bool> predicate) =>
+            list.CadrWhile(predicate, ValueTuple.Create);
+
+        public static TResult
+            CadrWhile<T, TResult>(
+                this ConsList<T> list,
+                Func<T, bool> predicate,
+                Func<ConsList<T>, ConsList<T>, TResult> resultSelector) =>
             list.CadrWhile((e, i) => predicate(e), resultSelector);
 
-        public static TResult CadrWhile<T, TResult>(this ConsList<T> list,
-            Func<T, int, bool> predicate,
-            Func<ConsList<T>, ConsList<T>, TResult> resultSelector)
+        public static TResult
+            CadrWhile<T, TResult>(
+                this ConsList<T> list,
+                Func<T, int, bool> predicate,
+                Func<ConsList<T>, ConsList<T>, TResult> resultSelector)
         {
             if (list == null) throw new ArgumentNullException(nameof(list));
             if (predicate == null) throw new ArgumentNullException(nameof(predicate));
