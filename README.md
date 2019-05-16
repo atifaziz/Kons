@@ -123,6 +123,25 @@ Folding throws an `InvalidOperationException` if the list has fewer than
 requested elements.
 
 
+## Building
+
+To build just the binaries on Windows, run:
+
+    .\build.cmd
+
+On Linux or macOS, run instead:
+
+    ./build.sh
+
+To build the binaries and the NuGet packages on Windows, run:
+
+    .\pack.cmd
+
+On Linux or macOS, run instead:
+
+    ./pack.sh
+
+
   [build-badge]: https://img.shields.io/appveyor/ci/raboof/kons.svg
   [myget-badge]: https://img.shields.io/myget/raboof/v/Kons.svg?label=myget
   [edge-pkgs]: https://www.myget.org/feed/raboof/package/nuget/Kons
