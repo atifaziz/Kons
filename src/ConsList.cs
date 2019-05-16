@@ -57,6 +57,35 @@ namespace Kons
             return result;
         }
 
+        public static (ConsList<T> TrueList, ConsList<T> FalseList)
+            Partition<T>(this ConsList<T> list,
+                         Func<T, bool> predicate) =>
+            list.Partition(predicate, ValueTuple.Create);
+
+        public static TResult
+            Partition<T, TResult>(
+                this ConsList<T> list,
+                Func<T, bool> predicate,
+                Func<ConsList<T>, ConsList<T>, TResult> resultSelector)
+        {
+            if (list == null) throw new ArgumentNullException(nameof(list));
+            if (predicate == null) throw new ArgumentNullException(nameof(predicate));
+            if (resultSelector == null) throw new ArgumentNullException(nameof(resultSelector));
+
+            List<T> ts = null, fs = null;
+
+            foreach (var item in list)
+            {
+                ref var lst = ref predicate(item) ? ref ts : ref fs;
+                if (lst == null)
+                    lst = new List<T>();
+                lst.Add(item);
+            }
+
+            return resultSelector(ts is List<T> tr ? Cons(tr.AsEnumerable()) : ConsList<T>.Empty,
+                                  fs is List<T> fr ? Cons(fr.AsEnumerable()) : ConsList<T>.Empty);
+        }
+
         public static (ConsList<T>, ConsList<T>)
             CadrWhile<T>(this ConsList<T> list,
                          Func<T, bool> predicate) =>

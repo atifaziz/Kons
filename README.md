@@ -122,6 +122,15 @@ Console.WriteLine(list.Cadr((a, b, _) => $"A = {a}; B = {b}; ... = {Format(_)}")
 Folding throws an `InvalidOperationException` if the list has fewer than
 requested elements.
 
+Partitioning into two lists (matching and unmatching, respectively) based on
+whether elements satisfy a condition or not:
+
+```c#
+var (evens, odds) = list.Partition(x => x % 2 == 0);
+Console.WriteLine($"Evens = {Format(evens)}; Odds = {Format(odds)}");
+// => Evens = [2, 4]; Odds = [1, 3, 5]
+```
+
 
 ## Building
 
