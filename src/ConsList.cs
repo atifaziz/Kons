@@ -90,7 +90,7 @@ namespace Kons
             return list.TakeWhile(predicate)
                        .Aggregate((Head: ConsList<T>.Empty, Tail: list),
                                   (ht, e) => (Cons(e, ht.Head), ht.Tail.Cdr),
-                                  ht => resultSelector(ht.Head, ht.Tail));
+                                  ht => resultSelector(ConsList<T>.Empty.Prepend(ht.Head), ht.Tail));
         }
     }
 
