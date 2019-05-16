@@ -34,6 +34,14 @@ namespace Kons
         public static ConsList<T> Cons<T>(T item) => ConsList<T>.Empty.Prepend(item);
         public static ConsList<T> Cons<T>(T item, ConsList<T> list) => list.Prepend(item);
 
+        public static ConsList<T> Cons<T>(params T[] items)
+        {
+            var result = ConsList<T>.Empty;
+            for (var i = items.Length - 1; i >= 0; i--)
+                result = result.Prepend(items[i]);
+            return result;
+        }
+
         public static ConsList<T> From<T>(IList<T> list)
         {
             if (list == null) throw new ArgumentNullException(nameof(list));
@@ -48,14 +56,6 @@ namespace Kons
              : source is T[] array ? Cons(array)
              : source is IList<T> list ? From(list)
              : source.Reverse().Aggregate(ConsList<T>.Empty, (l, e) => l.Prepend(e));
-
-        public static ConsList<T> Cons<T>(params T[] items)
-        {
-            var result = ConsList<T>.Empty;
-            for (var i = items.Length - 1; i >= 0; i--)
-                result = result.Prepend(items[i]);
-            return result;
-        }
 
         public static (ConsList<T> TrueList, ConsList<T> FalseList)
             Partition<T>(this ConsList<T> list,
