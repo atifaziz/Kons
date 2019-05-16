@@ -28,7 +28,7 @@ namespace Kons
     {
 <#
     foreach (var e in
-        from i in Enumerable.Range(2, 8)
+        from i in Enumerable.Range(2, 16)
         select Enumerable.Range(1, i)
                          .Select(j => "item" + j.ToString(CultureInfo.InvariantCulture))
                          .ToArray()

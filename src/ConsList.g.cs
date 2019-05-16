@@ -60,6 +60,46 @@ namespace Kons
         public static ConsList<T> Cons<T>(T item1, T item2, T item3, T item4, T item5, T item6, T item7, T item8, T item9, ConsList<T> list) =>
             list.Prepend(item9).Prepend(item8).Prepend(item7).Prepend(item6).Prepend(item5).Prepend(item4).Prepend(item3).Prepend(item2).Prepend(item1);
 
+        public static ConsList<T> Cons<T>(T item1, T item2, T item3, T item4, T item5, T item6, T item7, T item8, T item9, T item10) =>
+            Cons(item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, ConsList<T>.Empty);
+        public static ConsList<T> Cons<T>(T item1, T item2, T item3, T item4, T item5, T item6, T item7, T item8, T item9, T item10, ConsList<T> list) =>
+            list.Prepend(item10).Prepend(item9).Prepend(item8).Prepend(item7).Prepend(item6).Prepend(item5).Prepend(item4).Prepend(item3).Prepend(item2).Prepend(item1);
+
+        public static ConsList<T> Cons<T>(T item1, T item2, T item3, T item4, T item5, T item6, T item7, T item8, T item9, T item10, T item11) =>
+            Cons(item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, ConsList<T>.Empty);
+        public static ConsList<T> Cons<T>(T item1, T item2, T item3, T item4, T item5, T item6, T item7, T item8, T item9, T item10, T item11, ConsList<T> list) =>
+            list.Prepend(item11).Prepend(item10).Prepend(item9).Prepend(item8).Prepend(item7).Prepend(item6).Prepend(item5).Prepend(item4).Prepend(item3).Prepend(item2).Prepend(item1);
+
+        public static ConsList<T> Cons<T>(T item1, T item2, T item3, T item4, T item5, T item6, T item7, T item8, T item9, T item10, T item11, T item12) =>
+            Cons(item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12, ConsList<T>.Empty);
+        public static ConsList<T> Cons<T>(T item1, T item2, T item3, T item4, T item5, T item6, T item7, T item8, T item9, T item10, T item11, T item12, ConsList<T> list) =>
+            list.Prepend(item12).Prepend(item11).Prepend(item10).Prepend(item9).Prepend(item8).Prepend(item7).Prepend(item6).Prepend(item5).Prepend(item4).Prepend(item3).Prepend(item2).Prepend(item1);
+
+        public static ConsList<T> Cons<T>(T item1, T item2, T item3, T item4, T item5, T item6, T item7, T item8, T item9, T item10, T item11, T item12, T item13) =>
+            Cons(item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12, item13, ConsList<T>.Empty);
+        public static ConsList<T> Cons<T>(T item1, T item2, T item3, T item4, T item5, T item6, T item7, T item8, T item9, T item10, T item11, T item12, T item13, ConsList<T> list) =>
+            list.Prepend(item13).Prepend(item12).Prepend(item11).Prepend(item10).Prepend(item9).Prepend(item8).Prepend(item7).Prepend(item6).Prepend(item5).Prepend(item4).Prepend(item3).Prepend(item2).Prepend(item1);
+
+        public static ConsList<T> Cons<T>(T item1, T item2, T item3, T item4, T item5, T item6, T item7, T item8, T item9, T item10, T item11, T item12, T item13, T item14) =>
+            Cons(item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12, item13, item14, ConsList<T>.Empty);
+        public static ConsList<T> Cons<T>(T item1, T item2, T item3, T item4, T item5, T item6, T item7, T item8, T item9, T item10, T item11, T item12, T item13, T item14, ConsList<T> list) =>
+            list.Prepend(item14).Prepend(item13).Prepend(item12).Prepend(item11).Prepend(item10).Prepend(item9).Prepend(item8).Prepend(item7).Prepend(item6).Prepend(item5).Prepend(item4).Prepend(item3).Prepend(item2).Prepend(item1);
+
+        public static ConsList<T> Cons<T>(T item1, T item2, T item3, T item4, T item5, T item6, T item7, T item8, T item9, T item10, T item11, T item12, T item13, T item14, T item15) =>
+            Cons(item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12, item13, item14, item15, ConsList<T>.Empty);
+        public static ConsList<T> Cons<T>(T item1, T item2, T item3, T item4, T item5, T item6, T item7, T item8, T item9, T item10, T item11, T item12, T item13, T item14, T item15, ConsList<T> list) =>
+            list.Prepend(item15).Prepend(item14).Prepend(item13).Prepend(item12).Prepend(item11).Prepend(item10).Prepend(item9).Prepend(item8).Prepend(item7).Prepend(item6).Prepend(item5).Prepend(item4).Prepend(item3).Prepend(item2).Prepend(item1);
+
+        public static ConsList<T> Cons<T>(T item1, T item2, T item3, T item4, T item5, T item6, T item7, T item8, T item9, T item10, T item11, T item12, T item13, T item14, T item15, T item16) =>
+            Cons(item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12, item13, item14, item15, item16, ConsList<T>.Empty);
+        public static ConsList<T> Cons<T>(T item1, T item2, T item3, T item4, T item5, T item6, T item7, T item8, T item9, T item10, T item11, T item12, T item13, T item14, T item15, T item16, ConsList<T> list) =>
+            list.Prepend(item16).Prepend(item15).Prepend(item14).Prepend(item13).Prepend(item12).Prepend(item11).Prepend(item10).Prepend(item9).Prepend(item8).Prepend(item7).Prepend(item6).Prepend(item5).Prepend(item4).Prepend(item3).Prepend(item2).Prepend(item1);
+
+        public static ConsList<T> Cons<T>(T item1, T item2, T item3, T item4, T item5, T item6, T item7, T item8, T item9, T item10, T item11, T item12, T item13, T item14, T item15, T item16, T item17) =>
+            Cons(item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12, item13, item14, item15, item16, item17, ConsList<T>.Empty);
+        public static ConsList<T> Cons<T>(T item1, T item2, T item3, T item4, T item5, T item6, T item7, T item8, T item9, T item10, T item11, T item12, T item13, T item14, T item15, T item16, T item17, ConsList<T> list) =>
+            list.Prepend(item17).Prepend(item16).Prepend(item15).Prepend(item14).Prepend(item13).Prepend(item12).Prepend(item11).Prepend(item10).Prepend(item9).Prepend(item8).Prepend(item7).Prepend(item6).Prepend(item5).Prepend(item4).Prepend(item3).Prepend(item2).Prepend(item1);
+
     }
 
     partial class ConsList<T>
