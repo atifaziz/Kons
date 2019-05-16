@@ -34,7 +34,7 @@ namespace Kons
         public static ConsList<T> Cons<T>(T item) => ConsList<T>.Empty.Prepend(item);
         public static ConsList<T> Cons<T>(T item, ConsList<T> list) => list.Prepend(item);
 
-        public static ConsList<T> Cons<T>(IList<T> list)
+        public static ConsList<T> From<T>(IList<T> list)
         {
             if (list == null) throw new ArgumentNullException(nameof(list));
             var result = ConsList<T>.Empty;
@@ -43,10 +43,10 @@ namespace Kons
             return result;
         }
 
-        public static ConsList<T> Cons<T>(IEnumerable<T> source)
+        public static ConsList<T> From<T>(IEnumerable<T> source)
             => source is null ? throw new ArgumentNullException(nameof(source))
              : source is T[] array ? Cons(array)
-             : source is IList<T> list ? Cons(list)
+             : source is IList<T> list ? From(list)
              : source.Reverse().Aggregate(ConsList<T>.Empty, (l, e) => l.Prepend(e));
 
         public static ConsList<T> Cons<T>(params T[] items)
@@ -82,8 +82,8 @@ namespace Kons
                 lst.Add(item);
             }
 
-            return resultSelector(ts is List<T> tr ? Cons(tr.AsEnumerable()) : ConsList<T>.Empty,
-                                  fs is List<T> fr ? Cons(fr.AsEnumerable()) : ConsList<T>.Empty);
+            return resultSelector(ts is List<T> tr ? From(tr) : ConsList<T>.Empty,
+                                  fs is List<T> fr ? From(fr) : ConsList<T>.Empty);
         }
 
         public static (ConsList<T>, ConsList<T>)
