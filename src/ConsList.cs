@@ -55,7 +55,7 @@ namespace Kons
             => source is null ? throw new ArgumentNullException(nameof(source))
              : source is T[] array ? Cons(array)
              : source is IList<T> list ? From(list)
-             : source.Reverse().Aggregate(ConsList<T>.Empty, (l, e) => l.Prepend(e));
+             : From(source.ToList());
 
         public static (ConsList<T> TrueList, ConsList<T> FalseList)
             Partition<T>(this ConsList<T> list,
